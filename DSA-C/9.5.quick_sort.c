@@ -1,56 +1,60 @@
-#include <stdio.h>
 
-void swap(int* a, int* b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j <= high - 1; j++) {
-        if (arr[j] < pivot) {
-            i++;
-            swap(&arr[i], &arr[j]);
+#include<stdio.h>
+void sort(int,int[],int,int);
+void swap(int*, int*);
+void main()
+{
+    int n,left,right;
+    printf("Enter size of array\n");
+    scanf("%d",&n);
+    int a[n];
+    printf("Enter Elements of Array\n");
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    left=0;
+    right=n;
+    printf("Before Sorting\n");
+    for(int i=0;i<n;i++)
+    {
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+    sort(n,a,left,right);
+printf("After Sorting\n");
+        for(int i=0;i<n;i++)
+        {
+            printf("%d ",a[i]);
         }
-    }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
 }
-
-void quicksort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-
-        quicksort(arr, low, pi - 1);
-        quicksort(arr, pi + 1, high);
-    }
+void sort(int n, int a[n], int left, int right)
+{
+    int pivot, la, ra;
+    la=left;
+    ra=right;
+    pivot=a[(left+right)/2];
+    do
+    {
+        while(a[ra]>pivot)
+        ra--;
+        while(a[la]<pivot)
+        la++;
+        if(la<=ra)
+        {
+            swap(&a[la],&a[ra]);
+            la++;
+            ra--;
+        }
+    }while(ra>=la);
+    if(left<ra)
+    sort(n,a,left,ra);
+    if(la<right)
+    sort(n,a,la,right);
 }
-
-int main() {
-    int n;
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
-
-    int arr[n];
-    printf("Enter the elements: \n");
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-
-    printf("Input Array: ");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-
-    quicksort(arr, 0, n - 1);
-
-    printf("\nSorted Array: ");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-
-    return 0;
+void swap(int* a, int* b)
+{
+    int temp=*a;
+    *a=*b;
+    *b=temp;
 }
