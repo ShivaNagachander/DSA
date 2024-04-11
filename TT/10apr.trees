@@ -1,0 +1,68 @@
+class Node:
+    def __init__(self, x):
+        self.data = x
+        self.left = None
+        self.right = None
+def insert(root, x):
+    if root is None:
+        return Node(x)
+    elif x < root.data:
+        root.left = insert(root.left, x)
+    else:
+        root.right = insert(root.right, x)
+    return root
+def preorder(root):
+    if root is None:
+        return
+    print(root.data, end=" ")
+    preorder(root.left)
+    preorder(root.right)
+def inorder(root):
+    if root is None:
+        return
+    inorder(root.left)
+    print(root.data, end=" ")
+    inorder(root.right)
+def search(root, x):
+    if root is None:
+        return False
+    if root.data == x:
+        return True
+    elif x < root.data:
+        return search(root.left, x)
+    else:
+        return search(root.right, x)
+def add_all(root):
+    if root is None:
+        return 0
+    return root.data + add_all(root.left) + add_all(root.right)
+def add_even(root):
+    if root is None:
+        return 0
+    if root.data % 2 == 0:
+        return root.data+add_even(root.left)+add_even(root.right)
+    else:
+        return add_even(root.left)+add_even(root.right)
+def add_odd(root):
+    if root is None:
+        return 0
+    if root.data % 2 != 0:
+        return root.data + add_odd(root.left) + add_odd(root.right)
+    else:
+        return add_odd(root.left) + add_odd(root.right)
+root = None
+l = eval(input("Enter a list: "))
+for i in l:
+    root = insert(root, i)
+n = int(input("Enter key: "))
+if search(root, n):
+    print("Element present")
+else:
+    print("Element not present")
+print("Inorder Traversal:")
+inorder(root)
+print("\nPreorder Traversal:")
+preorder(root)
+print("\nSum of all nodes:", add_all(root))
+print("Sum of even nodes:", add_even(root))
+print("Sum of odd nodes:", add_odd(root))
