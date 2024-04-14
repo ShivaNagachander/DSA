@@ -1,0 +1,68 @@
+class node:
+    def __init__(self,x):
+        self.data=x
+        self.left=None
+        self.right=None
+def search(root, x):
+    if(root == None):
+        return "not found"
+    if(root.data == x):
+        return "found"
+    elif(x < root.data):
+        return search(root.left,x)
+    else:
+        return search(root.right,x)
+def insert(root,x):
+    if(root==None):
+        return node(x)
+    elif(x<root.data):
+        root.left=insert(root.left,x)
+    else:
+        root.right=insert(root.right,x)
+    return root
+def height(root):
+    if(root==None):
+        return 0
+    else:
+        lh=height(root.left)
+        rh=height(root.right)
+    return max(lh,rh)+1
+def add_all(root):
+    if(root==None):
+        return 0
+    return root.data+add_all(root.left)+add_all(root.right)
+def preorder(root):
+    if(root==None):
+        return
+    print(root.data,end =' ')
+    preorder(root.left)
+    preorder(root.right)
+def inorder(root):
+    if (root == None):
+        return
+    print(root.data,end=' ')
+    inorder(root.left)
+    inorder(root.right)
+def postorder(root):
+    if(root==None):
+        return
+    postorder(root.left)
+    postorder(root.right)
+    print(root.data,end =' ')
+root=node(10)
+root.left=node(5)
+root.right=node(15)
+root.left.left=node(2)
+root.left.right=node(7)
+#print(search(root,10))
+#print(add_ll(root))
+#print(preorder(root))
+#print(postorder(root))
+root=insert(root,20)
+root=insert(root,30)
+root=insert(root,12)
+print(preorder(root))
+print(height(root))
+
+
+print(add_all(root))
